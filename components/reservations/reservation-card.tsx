@@ -59,7 +59,7 @@ export function ReservationCard({ reservation, onEdit, onDelete, onCancel }: Res
       <div className="flex-1">
         <div className="flex items-start justify-between gap-2">
           <h3 className="font-medium text-foreground line-clamp-2 flex-1">
-            {reservation.book?.title || "Unknown Book"}
+            {reservation.book?.name || "Unknown Book"}
           </h3>
           {getStatusBadge(reservation.status)}
         </div>

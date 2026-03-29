@@ -103,7 +103,7 @@ export function LoanStatsDialog({ open, onClose }: LoanStatsDialogProps) {
                 </div>
                 {mostBorrowedBook ? (
                   <div>
-                    <p className="font-medium text-foreground">{mostBorrowedBook.title}</p>
+                    <p className="font-medium text-foreground">{mostBorrowedBook.name}</p>
                     {mostBorrowedBook.authors && mostBorrowedBook.authors.length > 0 && (
                       <p className="text-sm text-muted-foreground">
                         by {mostBorrowedBook.authors.map((a) => a.name).join(", ")}

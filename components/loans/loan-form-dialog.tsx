@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { createLoan, updateLoan, ApiError } from "@/lib/api"
 import type { Loan, Book, User } from "@/lib/types"
 
@@ -28,7 +27,6 @@ export function LoanFormDialog({
 }: LoanFormDialogProps) {
   const [userId, setUserId] = useState<string>("")
   const [bookId, setBookId] = useState<string>("")
-  const [dueDate, setDueDate] = useState<string>("")
   const [loading, setLoading] = useState(false)
   const [validationError, setValidationError] = useState<string | null>(null)
 
@@ -39,14 +37,9 @@ export function LoanFormDialog({
       if (loan) {
         setUserId(loan.user?.id?.toString() || "")
         setBookId(loan.book?.id?.toString() || "")
-        setDueDate(loan.dueDate || "")
       } else {
         setUserId("")
         setBookId("")
-        // Default due date: 14 days from now
-        const defaultDue = new Date()
-        defaultDue.setDate(defaultDue.getDate() + 14)
-        setDueDate(defaultDue.toISOString().split("T")[0])
       }
       setValidationError(null)
     }
@@ -83,18 +76,23 @@ export function LoanFormDialog({
       return
     }
 
-    const data = {
-      user: { id: parseInt(userId) },
-      book: { id: parseInt(bookId) },
-      dueDate: dueDate || undefined,
-    }
-
     try {
       setLoading(true)
       if (loan) {
-        await updateLoan(loan.id, data)
+        // For update, send all required fields
+        await updateLoan(loan.id, {
+          user: { id: parseInt(userId) },
+          book: { id: parseInt(bookId) },
+          loanDate: loan.loanDate,
+          returnDate: loan.returnDate,
+          status: loan.status,
+        })
       } else {
-        await createLoan(data)
+        // For create, backend sets loanDate and status
+        await createLoan({
+          user: { id: parseInt(userId) },
+          book: { id: parseInt(bookId) },
+        })
       }
       onSuccess()
     } catch (err) {
@@ -113,7 +111,7 @@ export function LoanFormDialog({
   // Filter books that have available copies for new loans
   const availableBooks = loan 
     ? books 
-    : books.filter((b) => (b.availableCopies ?? 0) > 0)
+    : books.filter((b) => (b.quantityAvailable ?? 0) > 0)
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -191,7 +189,7 @@ export function LoanFormDialog({
               <option value="">Select a book</option>
               {availableBooks.map((book) => (
                 <option key={book.id} value={book.id}>
-                  {book.title} {book.availableCopies !== undefined && `(${book.availableCopies} available)`}
+                  {book.name} {book.quantityAvailable !== undefined && `(${book.quantityAvailable} available)`}
                 </option>
               ))}
             </select>
@@ -200,18 +198,6 @@ export function LoanFormDialog({
                 No books with available copies. Consider making a reservation instead.
               </p>
             )}
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="dueDate" className="text-sm font-medium">
-              Due Date
-            </label>
-            <Input
-              id="dueDate"
-              type="date"
-              value={dueDate}
-              onChange={(e) => setDueDate(e.target.value)}
-            />
           </div>
 
           <div className="flex items-center justify-end gap-2 pt-4">

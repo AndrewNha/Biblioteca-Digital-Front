@@ -1,4 +1,4 @@
-import { Pencil, Trash2, Mail, Phone, Calendar } from "lucide-react"
+import { Pencil, Trash2, Mail, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { User } from "@/lib/types"
 
@@ -9,19 +9,6 @@ interface UserCardProps {
 }
 
 export function UserCard({ user, onEdit, onDelete }: UserCardProps) {
-  const formatDate = (dateString?: string) => {
-    if (!dateString) return null
-    try {
-      return new Date(dateString).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    } catch {
-      return dateString
-    }
-  }
-
   return (
     <div className="flex flex-col p-5 bg-card border border-border rounded-lg">
       <div className="flex-1">
@@ -32,16 +19,10 @@ export function UserCard({ user, onEdit, onDelete }: UserCardProps) {
             <Mail className="h-3.5 w-3.5" />
             <span className="truncate">{user.email}</span>
           </div>
-          {user.phone && (
+          {user.telephoneNumber && (
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Phone className="h-3.5 w-3.5" />
-              <span>{user.phone}</span>
-            </div>
-          )}
-          {user.registrationDate && (
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Calendar className="h-3.5 w-3.5" />
-              <span>Registered: {formatDate(user.registrationDate)}</span>
+              <span>{user.telephoneNumber}</span>
             </div>
           )}
         </div>

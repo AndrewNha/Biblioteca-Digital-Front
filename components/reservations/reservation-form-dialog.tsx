@@ -97,7 +97,7 @@ export function ReservationFormDialog({
   // For new reservations, only show books without available copies
   const unavailableBooks = reservation
     ? books
-    : books.filter((b) => (b.availableCopies ?? 0) === 0)
+    : books.filter((b) => (b.quantityAvailable ?? 0) === 0)
 
   // Show all books as a fallback if no unavailable books
   const displayBooks = reservation ? books : (unavailableBooks.length > 0 ? unavailableBooks : books)
@@ -178,7 +178,7 @@ export function ReservationFormDialog({
               <option value="">Select a book</option>
               {displayBooks.map((book) => (
                 <option key={book.id} value={book.id}>
-                  {book.title} {book.availableCopies !== undefined && `(${book.availableCopies} available)`}
+                  {book.name} {book.quantityAvailable !== undefined && `(${book.quantityAvailable} available)`}
                 </option>
               ))}
             </select>

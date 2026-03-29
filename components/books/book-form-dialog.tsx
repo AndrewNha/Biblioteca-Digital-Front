@@ -24,32 +24,38 @@ export function BookFormDialog({
   authors,
   onError,
 }: BookFormDialogProps) {
-  const [title, setTitle] = useState("")
-  const [isbn, setIsbn] = useState("")
-  const [publicationYear, setPublicationYear] = useState("")
-  const [totalCopies, setTotalCopies] = useState("")
+  const [name, setName] = useState("")
+  const [genre, setGenre] = useState("")
+  const [publisher, setPublisher] = useState("")
+  const [releaseDate, setReleaseDate] = useState("")
+  const [quantity, setQuantity] = useState("")
+  const [quantityAvailable, setQuantityAvailable] = useState("")
   const [selectedAuthors, setSelectedAuthors] = useState<number[]>([])
   const [loading, setLoading] = useState(false)
   const [validationError, setValidationError] = useState<string | null>(null)
-  const titleInputRef = useRef<HTMLInputElement>(null)
+  const nameInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (open) {
       if (book) {
-        setTitle(book.title)
-        setIsbn(book.isbn || "")
-        setPublicationYear(book.publicationYear?.toString() || "")
-        setTotalCopies(book.totalCopies?.toString() || "")
+        setName(book.name)
+        setGenre(book.genre || "")
+        setPublisher(book.publisher || "")
+        setReleaseDate(book.releaseDate || "")
+        setQuantity(book.quantity?.toString() || "")
+        setQuantityAvailable(book.quantityAvailable?.toString() || "")
         setSelectedAuthors(book.authors?.map((a) => a.id) || [])
       } else {
-        setTitle("")
-        setIsbn("")
-        setPublicationYear("")
-        setTotalCopies("")
+        setName("")
+        setGenre("")
+        setPublisher("")
+        setReleaseDate("")
+        setQuantity("")
+        setQuantityAvailable("")
         setSelectedAuthors([])
       }
       setValidationError(null)
-      setTimeout(() => titleInputRef.current?.focus(), 100)
+      setTimeout(() => nameInputRef.current?.focus(), 100)
     }
   }, [open, book])
 
@@ -76,16 +82,18 @@ export function BookFormDialog({
     e.preventDefault()
     setValidationError(null)
 
-    if (!title.trim()) {
-      setValidationError("Title is required")
+    if (!name.trim()) {
+      setValidationError("Name is required")
       return
     }
 
     const data = {
-      title: title.trim(),
-      isbn: isbn.trim() || undefined,
-      publicationYear: publicationYear ? parseInt(publicationYear) : undefined,
-      totalCopies: totalCopies ? parseInt(totalCopies) : undefined,
+      name: name.trim(),
+      genre: genre.trim() || undefined,
+      publisher: publisher.trim() || undefined,
+      releaseDate: releaseDate || undefined,
+      quantity: quantity ? parseInt(quantity) : undefined,
+      quantityAvailable: quantityAvailable ? parseInt(quantityAvailable) : undefined,
       authors: selectedAuthors.map((id) => ({ id })),
     }
 
@@ -143,57 +151,82 @@ export function BookFormDialog({
           )}
 
           <div className="space-y-2">
-            <label htmlFor="title" className="text-sm font-medium">
-              Title <span className="text-destructive">*</span>
+            <label htmlFor="name" className="text-sm font-medium">
+              Name <span className="text-destructive">*</span>
             </label>
             <Input
-              ref={titleInputRef}
-              id="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Enter book title"
+              ref={nameInputRef}
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter book name"
               required
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="isbn" className="text-sm font-medium">
-              ISBN
-            </label>
-            <Input
-              id="isbn"
-              value={isbn}
-              onChange={(e) => setIsbn(e.target.value)}
-              placeholder="e.g., 978-3-16-148410-0"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label htmlFor="publicationYear" className="text-sm font-medium">
-                Publication Year
+              <label htmlFor="genre" className="text-sm font-medium">
+                Genre
               </label>
               <Input
-                id="publicationYear"
-                type="number"
-                value={publicationYear}
-                onChange={(e) => setPublicationYear(e.target.value)}
-                placeholder="e.g., 2024"
-                min="1000"
-                max="9999"
+                id="genre"
+                value={genre}
+                onChange={(e) => setGenre(e.target.value)}
+                placeholder="e.g., Fiction"
               />
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="totalCopies" className="text-sm font-medium">
-                Total Copies
+              <label htmlFor="publisher" className="text-sm font-medium">
+                Publisher
               </label>
               <Input
-                id="totalCopies"
+                id="publisher"
+                value={publisher}
+                onChange={(e) => setPublisher(e.target.value)}
+                placeholder="e.g., Penguin"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="releaseDate" className="text-sm font-medium">
+              Release Date
+            </label>
+            <Input
+              id="releaseDate"
+              type="date"
+              value={releaseDate}
+              onChange={(e) => setReleaseDate(e.target.value)}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label htmlFor="quantity" className="text-sm font-medium">
+                Quantity (Total)
+              </label>
+              <Input
+                id="quantity"
                 type="number"
-                value={totalCopies}
-                onChange={(e) => setTotalCopies(e.target.value)}
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
                 placeholder="e.g., 5"
+                min="0"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="quantityAvailable" className="text-sm font-medium">
+                Quantity Available
+              </label>
+              <Input
+                id="quantityAvailable"
+                type="number"
+                value={quantityAvailable}
+                onChange={(e) => setQuantityAvailable(e.target.value)}
+                placeholder="e.g., 3"
                 min="0"
               />
             </div>
