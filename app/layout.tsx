@@ -39,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
+    <html lang="en" className="dark scroll-smooth" data-scroll-behavior="smooth">
       <body className={`${inter.variable} font-sans antialiased bg-background text-foreground min-h-screen`}>
         <Navigation />
         <main className="pt-16">

@@ -12,7 +12,7 @@ export function BookCard({ book, onEdit, onDelete }: BookCardProps) {
   return (
     <div className="flex flex-col p-5 bg-card border border-border rounded-lg">
       <div className="flex-1">
-        <h3 className="font-medium text-foreground line-clamp-2">{book.title}</h3>
+        <h3 className="font-medium text-foreground line-clamp-2">{book.name}</h3>
         
         {book.authors && book.authors.length > 0 && (
           <div className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
@@ -24,19 +24,24 @@ export function BookCard({ book, onEdit, onDelete }: BookCardProps) {
         )}
 
         <div className="mt-3 flex flex-wrap gap-2 text-xs text-muted-foreground">
-          {book.isbn && (
+          {book.genre && (
             <span className="px-2 py-1 bg-muted rounded">
-              ISBN: {book.isbn}
+              {book.genre}
             </span>
           )}
-          {book.publicationYear && (
+          {book.publisher && (
             <span className="px-2 py-1 bg-muted rounded">
-              {book.publicationYear}
+              {book.publisher}
             </span>
           )}
-          {(book.availableCopies !== undefined && book.totalCopies !== undefined) && (
+          {book.releaseDate && (
             <span className="px-2 py-1 bg-muted rounded">
-              {book.availableCopies}/{book.totalCopies} available
+              {book.releaseDate}
+            </span>
+          )}
+          {(book.quantityAvailable !== undefined && book.quantity !== undefined) && (
+            <span className="px-2 py-1 bg-muted rounded">
+              {book.quantityAvailable}/{book.quantity} available
             </span>
           )}
         </div>

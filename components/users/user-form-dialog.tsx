@@ -24,7 +24,7 @@ export function UserFormDialog({
 }: UserFormDialogProps) {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
-  const [phone, setPhone] = useState("")
+  const [telephoneNumber, setTelephoneNumber] = useState("")
   const [loading, setLoading] = useState(false)
   const [validationError, setValidationError] = useState<string | null>(null)
   const nameInputRef = useRef<HTMLInputElement>(null)
@@ -34,11 +34,11 @@ export function UserFormDialog({
       if (user) {
         setName(user.name)
         setEmail(user.email)
-        setPhone(user.phone || "")
+        setTelephoneNumber(user.telephoneNumber || "")
       } else {
         setName("")
         setEmail("")
-        setPhone("")
+        setTelephoneNumber("")
       }
       setValidationError(null)
       setTimeout(() => nameInputRef.current?.focus(), 100)
@@ -82,7 +82,7 @@ export function UserFormDialog({
     const data = {
       name: name.trim(),
       email: email.trim(),
-      phone: phone.trim() || undefined,
+      telephoneNumber: telephoneNumber.trim() || undefined,
     }
 
     try {
@@ -167,15 +167,15 @@ export function UserFormDialog({
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="phone" className="text-sm font-medium">
-              Phone
+            <label htmlFor="telephoneNumber" className="text-sm font-medium">
+              Telephone Number
             </label>
             <Input
-              id="phone"
+              id="telephoneNumber"
               type="tel"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="e.g., +1 234 567 8900"
+              value={telephoneNumber}
+              onChange={(e) => setTelephoneNumber(e.target.value)}
+              placeholder="e.g., +55 11 99999-9999"
             />
           </div>
 

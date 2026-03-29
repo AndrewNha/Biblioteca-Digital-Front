@@ -1,4 +1,4 @@
-import { Pencil, Trash2, RotateCcw, BookOpen, User, Calendar, Clock } from "lucide-react"
+import { Pencil, Trash2, RotateCcw, BookOpen, User, Calendar } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { Loan } from "@/lib/types"
 
@@ -59,7 +59,7 @@ export function LoanCard({ loan, onEdit, onDelete, onReturn }: LoanCardProps) {
       <div className="flex-1">
         <div className="flex items-start justify-between gap-2">
           <h3 className="font-medium text-foreground line-clamp-2 flex-1">
-            {loan.book?.title || "Unknown Book"}
+            {loan.book?.name || "Unknown Book"}
           </h3>
           {getStatusBadge(loan.status)}
         </div>
@@ -72,10 +72,6 @@ export function LoanCard({ loan, onEdit, onDelete, onReturn }: LoanCardProps) {
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Calendar className="h-3.5 w-3.5" />
             <span>Loaned: {formatDate(loan.loanDate)}</span>
-          </div>
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Clock className="h-3.5 w-3.5" />
-            <span>Due: {formatDate(loan.dueDate)}</span>
           </div>
           {loan.returnDate && (
             <div className="flex items-center gap-2 text-sm text-muted-foreground">

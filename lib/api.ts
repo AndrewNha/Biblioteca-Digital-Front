@@ -40,7 +40,7 @@ export async function getBook(id: number) {
   return handleResponse<import("./types").Book>(response)
 }
 
-export async function createBook(data: { title: string; isbn?: string; publicationYear?: number; totalCopies?: number; authors: { id: number }[] }) {
+export async function createBook(data: { name: string; genre?: string; publisher?: string; releaseDate?: string; quantity?: number; quantityAvailable?: number; authors: { id: number }[] }) {
   const response = await fetch(`${API_BASE_URL}/book`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -49,7 +49,7 @@ export async function createBook(data: { title: string; isbn?: string; publicati
   return handleResponse<import("./types").Book>(response)
 }
 
-export async function updateBook(id: number, data: { title: string; isbn?: string; publicationYear?: number; totalCopies?: number; authors: { id: number }[] }) {
+export async function updateBook(id: number, data: { name: string; genre?: string; publisher?: string; releaseDate?: string; quantity?: number; quantityAvailable?: number; authors: { id: number }[] }) {
   const response = await fetch(`${API_BASE_URL}/book/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -76,7 +76,7 @@ export async function getAuthor(id: number) {
   return handleResponse<import("./types").Author>(response)
 }
 
-export async function createAuthor(data: { name: string; nationality?: string; birthDate?: string }) {
+export async function createAuthor(data: { name: string; nationality?: string }) {
   const response = await fetch(`${API_BASE_URL}/author`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -85,7 +85,7 @@ export async function createAuthor(data: { name: string; nationality?: string; b
   return handleResponse<import("./types").Author>(response)
 }
 
-export async function updateAuthor(id: number, data: { name: string; nationality?: string; birthDate?: string }) {
+export async function updateAuthor(id: number, data: { name: string; nationality?: string }) {
   const response = await fetch(`${API_BASE_URL}/author/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -112,7 +112,7 @@ export async function getUser(id: number) {
   return handleResponse<import("./types").User>(response)
 }
 
-export async function createUser(data: { name: string; email: string; phone?: string }) {
+export async function createUser(data: { name: string; email: string; telephoneNumber?: string }) {
   const response = await fetch(`${API_BASE_URL}/user`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -121,7 +121,7 @@ export async function createUser(data: { name: string; email: string; phone?: st
   return handleResponse<import("./types").User>(response)
 }
 
-export async function updateUser(id: number, data: { name: string; email: string; phone?: string }) {
+export async function updateUser(id: number, data: { name: string; email: string; telephoneNumber?: string }) {
   const response = await fetch(`${API_BASE_URL}/user/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -148,7 +148,7 @@ export async function getLoan(id: number) {
   return handleResponse<import("./types").Loan>(response)
 }
 
-export async function createLoan(data: { user: { id: number }; book: { id: number }; dueDate?: string }) {
+export async function createLoan(data: { user: { id: number }; book: { id: number } }) {
   const response = await fetch(`${API_BASE_URL}/loan`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -157,7 +157,7 @@ export async function createLoan(data: { user: { id: number }; book: { id: numbe
   return handleResponse<import("./types").Loan>(response)
 }
 
-export async function updateLoan(id: number, data: { user: { id: number }; book: { id: number }; dueDate?: string }) {
+export async function updateLoan(id: number, data: { user: { id: number }; book: { id: number }; loanDate?: string; returnDate?: string; status?: string }) {
   const response = await fetch(`${API_BASE_URL}/loan/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },

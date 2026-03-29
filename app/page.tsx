@@ -10,7 +10,7 @@ const features = [
   },
   {
     title: "Authors",
-    description: "Keep track of authors, their nationalities, and birth dates.",
+    description: "Keep track of authors and their nationalities.",
     href: "/authors",
     icon: UserCircle,
   },
@@ -22,7 +22,7 @@ const features = [
   },
   {
     title: "Loans",
-    description: "Track book loans, due dates, returns, and view statistics.",
+    description: "Track book loans, returns, and view statistics.",
     href: "/loans",
     icon: ClipboardList,
   },

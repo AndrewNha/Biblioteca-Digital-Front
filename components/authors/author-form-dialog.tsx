@@ -24,7 +24,6 @@ export function AuthorFormDialog({
 }: AuthorFormDialogProps) {
   const [name, setName] = useState("")
   const [nationality, setNationality] = useState("")
-  const [birthDate, setBirthDate] = useState("")
   const [loading, setLoading] = useState(false)
   const [validationError, setValidationError] = useState<string | null>(null)
   const nameInputRef = useRef<HTMLInputElement>(null)
@@ -34,11 +33,9 @@ export function AuthorFormDialog({
       if (author) {
         setName(author.name)
         setNationality(author.nationality || "")
-        setBirthDate(author.birthDate || "")
       } else {
         setName("")
         setNationality("")
-        setBirthDate("")
       }
       setValidationError(null)
       setTimeout(() => nameInputRef.current?.focus(), 100)
@@ -68,7 +65,6 @@ export function AuthorFormDialog({
     const data = {
       name: name.trim(),
       nationality: nationality.trim() || undefined,
-      birthDate: birthDate || undefined,
     }
 
     try {
@@ -146,19 +142,7 @@ export function AuthorFormDialog({
               id="nationality"
               value={nationality}
               onChange={(e) => setNationality(e.target.value)}
-              placeholder="e.g., American"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="birthDate" className="text-sm font-medium">
-              Birth Date
-            </label>
-            <Input
-              id="birthDate"
-              type="date"
-              value={birthDate}
-              onChange={(e) => setBirthDate(e.target.value)}
+              placeholder="e.g., Brazilian"
             />
           </div>
 
